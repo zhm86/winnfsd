@@ -1060,7 +1060,7 @@ nfsstat3 CNFS3Prog::ProcedureREMOVE(void)
     if (stat == NFS3_OK) {
         DWORD fileAttr = GetFileAttributes(path);
         if ((fileAttr & FILE_ATTRIBUTE_DIRECTORY) && (fileAttr & FILE_ATTRIBUTE_REPARSE_POINT)) {
-            returnCode = RemoveFolder(path);
+            returnCode = CFileTable::RemoveFolder(path);
             if (returnCode != 0) {
                 if (returnCode == ERROR_DIR_NOT_EMPTY) {
                     stat = NFS3ERR_NOTEMPTY;
@@ -1069,7 +1069,7 @@ nfsstat3 CNFS3Prog::ProcedureREMOVE(void)
                 }
             }
         } else {
-            if (!RemoveFile(path)) {
+            if (!CFileTable::RemoveFile(path)) {
                 stat = NFS3ERR_IO;
             }
         }
@@ -1101,7 +1101,7 @@ nfsstat3 CNFS3Prog::ProcedureRMDIR(void)
     dir_wcc.before.attributes_follow = GetFileAttributesForNFS((char*)dirName.c_str(), &dir_wcc.before.attributes);
 
     if (stat == NFS3_OK) {
-        returnCode = RemoveFolder(path);
+        returnCode = CFileTable::RemoveFolder(path);
         if (returnCode != 0) {
             if (returnCode == ERROR_DIR_NOT_EMPTY) {
                 stat = NFS3ERR_NOTEMPTY;
@@ -1143,10 +1143,10 @@ nfsstat3 CNFS3Prog::ProcedureRENAME(void)
     fromdir_wcc.before.attributes_follow = GetFileAttributesForNFS((char*)dirFromName.c_str(), &fromdir_wcc.before.attributes);
     todir_wcc.before.attributes_follow = GetFileAttributesForNFS((char*)dirToName.c_str(), &todir_wcc.before.attributes);
     
-    if (FileExists(pathTo)) {
+    if (CFileTable::FileExists(pathTo)) {
 		DWORD fileAttr = GetFileAttributes(pathTo);
 		if ((fileAttr & FILE_ATTRIBUTE_DIRECTORY) && (fileAttr & FILE_ATTRIBUTE_REPARSE_POINT)) {
-			returnCode = RemoveFolder(pathTo);
+			returnCode = CFileTable::RemoveFolder(pathTo);
 			if (returnCode != 0) {
 				if (returnCode == ERROR_DIR_NOT_EMPTY) {
 					stat = NFS3ERR_NOTEMPTY;
@@ -1156,14 +1156,14 @@ nfsstat3 CNFS3Prog::ProcedureRENAME(void)
 			}
 		}
 		else {
-			if (!RemoveFile(pathTo)) {
+			if (!CFileTable::RemoveFile(pathTo)) {
 				stat = NFS3ERR_IO;
 			}
 		}
     } 
     
     if (stat == NFS3_OK) {
-        errno_t errorNumber = RenameDirectory(pathFrom, pathTo);
+        errno_t errorNumber = CFileTable::RenameDirectory(pathFrom, pathTo);
 
         if (errorNumber != 0) {
             char buffer[BUFFER_SIZE];
@@ -1289,7 +1289,7 @@ nfsstat3 CNFS3Prog::ProcedureREADDIR(void)
                 do {
                     Write(&bFollows); //value follows
                     sprintf_s(filePath, "%s\\%s", cStr, fileinfo.name);
-                    fileid = GetFileID(filePath);
+                    fileid = CFileTable::GetFileID(filePath);
                     Write(&fileid); //file id
                     name.Set(fileinfo.name);
                     Write(&name); //name
@@ -1373,7 +1373,7 @@ nfsstat3 CNFS3Prog::ProcedureREADDIRPLUS(void)
                 do {
                     Write(&bFollows); //value follows
                     sprintf_s(filePath, "%s\\%s", cStr, fileinfo.name);
-                    fileid = GetFileID(filePath);
+                    fileid = CFileTable::GetFileID(filePath);
                     Write(&fileid); //file id
                     name.Set(fileinfo.name);
                     Write(&name); //name
@@ -1557,7 +1557,7 @@ nfsstat3 CNFS3Prog::ProcedureCOMMIT(void)
 
     PrintLog("COMMIT");
     Read(&file);
-    bool validHandle = GetFilePath(file.contents, path);
+    bool validHandle = CFileTable::GetFilePath(file.contents, path);
     const char* cStr = validHandle ? path.c_str() : NULL;
 
     if (validHandle) {
@@ -1831,7 +1831,7 @@ bool CNFS3Prog::GetPath(std::string &path)
     nfs_fh3 object;
 
     Read(&object);
-    bool valid = GetFilePath(object.contents, path);
+    bool valid = CFileTable::GetFilePath(object.contents, path);
     if (valid) {
         PrintLog(" %s ", path.c_str());
     } else {
@@ -1846,7 +1846,7 @@ bool CNFS3Prog::ReadDirectory(std::string &dirName, std::string &fileName)
     diropargs3 fileRequest;
     Read(&fileRequest);
 
-    if (GetFilePath(fileRequest.dir.contents, dirName)) {
+    if (CFileTable::GetFilePath(fileRequest.dir.contents, dirName)) {
         fileName = std::string(fileRequest.name.name);
         return true;
     } else {
@@ -1888,11 +1888,11 @@ nfsstat3 CNFS3Prog::CheckFile(const char *fullPath)
 nfsstat3 CNFS3Prog::CheckFile(const char *directory, const char *fullPath)
 {
     // FileExists will not work for the root of a drive, e.g. \\?\D:\, therefore check if it is a drive root with GetDriveType
-    if (directory == NULL || (!FileExists(directory) && GetDriveType(directory) < 2) || fullPath == NULL) {
+    if (directory == NULL || (!CFileTable::FileExists(directory) && GetDriveType(directory) < 2) || fullPath == NULL) {
         return NFS3ERR_STALE;
     }
         
-    if (!FileExists(fullPath)) {
+    if (!CFileTable::FileExists(fullPath)) {
         return NFS3ERR_NOENT;
     }
         
@@ -1901,11 +1901,11 @@ nfsstat3 CNFS3Prog::CheckFile(const char *directory, const char *fullPath)
 
 bool CNFS3Prog::GetFileHandle(const char *path, nfs_fh3 *pObject)
 {
-	if (!::GetFileHandle(path)) {
+	if (!::CFileTable::GetFileHandle(path)) {
 		PrintLog("no filehandle(path %s)", path);
 		return false;
 	}
-    auto err = memcpy_s(pObject->contents, NFS3_FHSIZE, ::GetFileHandle(path), pObject->length);
+    auto err = memcpy_s(pObject->contents, NFS3_FHSIZE, ::CFileTable::GetFileHandle(path), pObject->length);
 	if (err != 0) {
 		PrintLog(" err %d ", err);
 		return false;
@@ -2006,7 +2006,7 @@ bool CNFS3Prog::GetFileAttributesForNFS(const char *path, fattr3 *pAttr)
     pAttr->rdev.specdata1 = 0;
     pAttr->rdev.specdata2 = 0;
     pAttr->fsid = 7; //NTFS //4; 
-    pAttr->fileid = GetFileID(path);
+    pAttr->fileid = CFileTable::GetFileID(path);
     pAttr->atime.seconds = FileTimeToPOSIX(lpFileInformation.ftLastAccessTime);
     pAttr->atime.nseconds = 0;
     pAttr->mtime.seconds = FileTimeToPOSIX(lpFileInformation.ftLastWriteTime);

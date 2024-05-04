@@ -24,10 +24,24 @@ struct CACHE_LIST
     FILE_ITEM *pItem;
     CACHE_LIST *pNext;
 };
-
+class CFileTree;
 class CFileTable
 {
-    public:
+public :
+
+    static CFileTable g_FileTable;
+    static CFileTree g_FileTree;
+public:
+    static bool FileExists(const char* path);
+    static unsigned long GetFileID(const char* path);
+    static unsigned char* GetFileHandle(const char* path);
+    static bool GetFilePath(unsigned char* handle, std::string& filePath);
+    static int SRenameFile(const char* pathFrom, const char* pathTo);
+    static int RenameDirectory(const char* pathFrom, const char* pathTo);
+    static int RemoveFolder(const char* path);
+    static bool RemoveFile(const char* path);
+    static void RemovePathFromFileTable(char* path);
+public:
     CFileTable();
     ~CFileTable();
     unsigned long GetIDByPath(const char *path);
@@ -48,14 +62,7 @@ class CFileTable
 	tree_node_<FILE_ITEM>* GetItemByID(unsigned int nID);
     void PutItemInCache(FILE_ITEM *pItem);
 
+
 };
 
-extern bool FileExists(const char *path);
-extern unsigned long GetFileID(const char *path);
-extern unsigned char *GetFileHandle(const char *path);
-extern bool GetFilePath(unsigned char *handle, std::string &filePath);
-extern int RenameFile(const char *pathFrom, const char *pathTo);
-extern int RenameDirectory(const char *pathFrom, const char *pathTo);
-extern int RemoveFolder(const char *path);
-extern bool RemoveFile(const char *path);
 #endif

@@ -171,10 +171,10 @@ void CMountProg::ProcedureMNT(void)
 		m_pOutStream->Write(MNT_OK); //OK
 
 		if (m_pParam->nVersion == 1) {
-			m_pOutStream->Write(GetFileHandle(path), FHSIZE);  //fhandle
+			m_pOutStream->Write(CFileTable::GetFileHandle(path), FHSIZE);  //fhandle
 		} else {
 			m_pOutStream->Write(NFS3_FHSIZE);  //length
-			m_pOutStream->Write(GetFileHandle(path), NFS3_FHSIZE);  //fhandle
+			m_pOutStream->Write(CFileTable::GetFileHandle(path), NFS3_FHSIZE);  //fhandle
 			m_pOutStream->Write(0);  //flavor
 		}
 

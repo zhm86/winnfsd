@@ -10,8 +10,8 @@
 #define FHSIZE 32
 #define NFS3_FHSIZE 64
 
-static CFileTable g_FileTable;
-static CFileTree g_FileTree;
+CFileTable CFileTable::g_FileTable;
+CFileTree CFileTable::g_FileTree;
 
 CFileTable::CFileTable()
 {
@@ -345,7 +345,7 @@ void CFileTable::RenameFile(const char *pathFrom, const char* pathTo)
 	g_FileTree.RenameItem(pathFrom, pathTo);
 }
 
-bool FileExists(const char *path)
+bool CFileTable::FileExists(const char *path)
 {
     intptr_t handle;
     struct _finddata_t fileinfo;
@@ -356,22 +356,22 @@ bool FileExists(const char *path)
     return handle == -1 ? false : strcmp(fileinfo.name, strrchr(path, '\\') + 1) == 0;  //filename must match case
 }
 
-unsigned long GetFileID(const char *path)
+unsigned long CFileTable::GetFileID(const char *path)
 {
     return g_FileTable.GetIDByPath(path);
 }
 
-unsigned char *GetFileHandle(const char *path)
+unsigned char * CFileTable::GetFileHandle(const char *path)
 {
     return g_FileTable.GetHandleByPath(path);
 }
 
-bool GetFilePath(unsigned char *handle, std::string &filePath)
+bool CFileTable::GetFilePath(unsigned char *handle, std::string &filePath)
 {
     return g_FileTable.GetPathByHandle(handle, filePath);
 }
 
-int RenameFile(const char *pathFrom, const char *pathTo)
+int CFileTable::SRenameFile(const char *pathFrom, const char *pathTo)
 {
 	tree_node_<FILE_ITEM>* node;
     FILE_ITEM *pItem;
@@ -394,9 +394,9 @@ int RenameFile(const char *pathFrom, const char *pathTo)
     }
 }
 
-int RenameDirectory(const char *pathFrom, const char *pathTo)
+int CFileTable::RenameDirectory(const char *pathFrom, const char *pathTo)
 {
-	errno_t errorNumber = RenameFile(pathFrom, pathTo);
+	errno_t errorNumber = SRenameFile(pathFrom, pathTo);
 
 	const char* dotFile = "\\.";
 	const char* backFile = "\\..";
@@ -432,7 +432,7 @@ int RenameDirectory(const char *pathFrom, const char *pathTo)
 
 }
 
-bool RemoveFile(const char *path)
+bool CFileTable::RemoveFile(const char *path)
 {
 	int nMode = 0;
 	nMode |= S_IREAD;
@@ -446,7 +446,7 @@ bool RemoveFile(const char *path)
     return false;
 }
 
-int RemoveFolder(const char *path)
+int CFileTable::RemoveFolder(const char *path)
 {
 	int nMode = 0;
 	unsigned long errorCode = 0;
@@ -478,7 +478,7 @@ int RemoveFolder(const char *path)
     return errorCode;
 }
 
-void RemovePathFromFileTable(char *path)
+void CFileTable::RemovePathFromFileTable(char *path)
 {
     g_FileTable.RemoveItem(path);
 }
