@@ -25,7 +25,7 @@ enum PPORTS
     NFS_PORT = 2049
 };
 
-enum PROGS
+enum PROG_PORTS
 {
     PROG_PORTMAP = 100000,
     PROG_NFS = 100003,

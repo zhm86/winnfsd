@@ -14,7 +14,7 @@
 #define FHSIZE 32
 #define NFS3_FHSIZE 64
 
-enum RPC_STATUSES
+enum PRC_STATUS
 {
     PRC_OK,
     PRC_FAIL,
