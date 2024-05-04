@@ -5,6 +5,8 @@
 
 class CFileTree
 {
+public:
+	void DisplayTree(tree_node_<FILE_ITEM>* node, int level);
 	public:
 		bool static const debug = false;
 		FILE_ITEM AddItem(const char *absolutePath, unsigned char *handle);
@@ -20,6 +22,5 @@ class CFileTree
 		tree_node_<FILE_ITEM>* findNodeWithPathFromNode(const char *path, tree_node_<FILE_ITEM>* node);
 		tree_node_<FILE_ITEM>* findParentNodeFromRootForPath(const char *path);
 };
-extern void DisplayTree(tree_node_<FILE_ITEM>* node, int level);
 
 #endif

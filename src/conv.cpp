@@ -16,13 +16,13 @@ wchar_t* _conv_from_utf8(const char* s) {
 	return dest;
 }
 
-wchar_t* _conv_from_932(const char* s) {
-	auto count = MultiByteToWideChar(932, MB_ERR_INVALID_CHARS, s, (int)strlen(s), NULL, 0);
+wchar_t* _conv_from_acp(const char* s) {
+	auto count = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, s, (int)strlen(s), NULL, 0);
 	if (count == 0) {
 		return NULL;
 	}
 	auto dest = new wchar_t[count + 1];
-	auto err = MultiByteToWideChar(932, MB_ERR_INVALID_CHARS, s, (int)strlen(s), dest, count);
+	auto err = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, s, (int)strlen(s), dest, count);
 	if (err == 0) {
 		return NULL;
 	}
@@ -30,13 +30,13 @@ wchar_t* _conv_from_932(const char* s) {
 	return dest;
 }
 
-char* _conv_to_932(const wchar_t* s) {
-	auto count = WideCharToMultiByte(932, 0, s, (int)wcslen(s), NULL, 0, NULL, NULL);
+char* _conv_to_acp(const wchar_t* s) {
+	auto count = WideCharToMultiByte(CP_ACP, 0, s, (int)wcslen(s), NULL, 0, NULL, NULL);
 	if (count == 0) {
 		return NULL;
 	}
 	auto dest = new char[count + 1];
-	auto err = WideCharToMultiByte(932, 0, s, (int)wcslen(s), dest, count, NULL, NULL);
+	auto err = WideCharToMultiByte(CP_ACP, 0, s, (int)wcslen(s), dest, count, NULL, NULL);
 	if (err == 0) {
 		return NULL;
 	}
@@ -44,9 +44,9 @@ char* _conv_to_932(const wchar_t* s) {
 	return dest;
 }
 
-char* _utf8_to_932(const char* s){
+char* _utf8_to_acp(const char* s){
     auto utf8 = _conv_from_utf8(s);
-    auto sjis = _conv_to_932(utf8);
+    auto sjis = _conv_to_acp(utf8);
     free(utf8);
     return sjis;
 }
