@@ -14,19 +14,19 @@
 #define FHSIZE 32
 #define NFS3_FHSIZE 64
 
-enum
+enum RPC_STATUSES
 {
     PRC_OK,
     PRC_FAIL,
     PRC_NOTIMP
 };
 
-typedef struct
+ struct ProcessParam
 {
     unsigned int nVersion;
     unsigned int nProc;
     char *pRemoteAddr;
-} ProcessParam;
+} ;
 
 class CRPCProg
 {

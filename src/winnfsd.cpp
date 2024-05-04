@@ -12,13 +12,13 @@
 #include <vector>
 
 #define SOCKET_NUM 3
-enum
+enum NFS_PORTS
 {
     PORTMAP_PORT = 111,
     MOUNT_PORT = 1058,
     NFS_PORT = 2049
 };
-enum
+enum PROGS
 {
     PROG_PORTMAP = 100000,
     PROG_NFS = 100003,

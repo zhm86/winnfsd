@@ -5,13 +5,13 @@
 
 #define PORT_NUM 10
 
-typedef struct
+ struct PORTMAP_HEADER
 {
     unsigned long prog;
     unsigned long vers;
     unsigned long proto;
     unsigned long port;
-} PORTMAP_HEADER;
+} ;
 
 class CPortmapProg : public CRPCProg
 {

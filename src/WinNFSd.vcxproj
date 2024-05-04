@@ -151,7 +151,6 @@
     <ClInclude Include="FileTree.h" />
     <ClInclude Include="InputStream.h" />
     <ClInclude Include="MountProg.h" />
-    <ClInclude Include="NFS2Prog.h" />
     <ClInclude Include="NFS3Prog.h" />
     <ClInclude Include="NFSProg.h" />
     <ClInclude Include="OutputStream.h" />

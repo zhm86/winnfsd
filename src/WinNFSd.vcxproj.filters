@@ -71,9 +71,6 @@
     <ClInclude Include="MountProg.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="NFS2Prog.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="NFS3Prog.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>

@@ -5,25 +5,25 @@
 
 #include "tree.hh"
 
-typedef struct
+struct FILE_ITEM
 {
     char *path;
     unsigned int nPathLen;
     unsigned char *handle;
     bool bCached;
-} FILE_ITEM;
+};
 
-typedef struct _FILE_TABLE
+struct FILE_TABLE
 {
-	 tree_node_<FILE_ITEM>* pItems[TABLE_SIZE];
-    _FILE_TABLE *pNext;
-} FILE_TABLE;
+	tree_node_<FILE_ITEM>* pItems[TABLE_SIZE];
+    FILE_TABLE *pNext;
+};
 
-typedef struct _CACHE_LIST
+struct CACHE_LIST
 {
     FILE_ITEM *pItem;
-    _CACHE_LIST *pNext;
-} CACHE_LIST;
+    CACHE_LIST *pNext;
+};
 
 class CFileTable
 {
