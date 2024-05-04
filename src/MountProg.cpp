@@ -8,7 +8,7 @@
 #include <string>
 #include <direct.h>
 
-enum
+enum MOUNTPROCS
 {
     MOUNTPROC_NULL = 0,
     MOUNTPROC_MNT = 1,
@@ -18,7 +18,7 @@ enum
     MOUNTPROC_EXPORT = 5
 };
 
-enum
+enum MNTS
 {
     MNT_OK = 0,
     MNTERR_PERM = 1,

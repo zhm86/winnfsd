@@ -2,7 +2,7 @@
 #include <string.h>
 
 #define MIN_PROG_NUM 100000
-enum
+enum MAPPROCS
 {
     MAPPROC_NULL = 0,
     MAPPROC_SET = 1,
@@ -12,20 +12,20 @@ enum
     MAPPROC_CALLIT = 5
 };
 
-enum
+enum IPPROTOS
 {
     IPPROTO_TCP = 6,
     IPPROTO_UDP = 17
 };
 
-enum
+enum PPORTS
 {
     PORTMAP_PORT = 111,
     MOUNT_PORT = 1058,
     NFS_PORT = 2049
 };
 
-enum
+enum PROGS
 {
     PROG_PORTMAP = 100000,
     PROG_NFS = 100003,

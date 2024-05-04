@@ -3,19 +3,19 @@
 #include <stdio.h>
 
 #define MIN_PROG_NUM 100000
-enum
+enum OPS
 {
     CALL = 0,
     REPLY = 1
 };
 
-enum
+enum MSGREPS
 {
     MSG_ACCEPTED = 0,
     MSG_DENIED = 1
 };
 
-enum
+enum PROGCS
 {
     SUCCESS = 0,
     PROG_UNAVAIL = 1,
@@ -24,13 +24,13 @@ enum
     GARBAGE_ARGS = 4
 };
 
-typedef struct
+ struct OPAQUE_AUTH
 {
     unsigned long flavor;
     unsigned long length;
-} OPAQUE_AUTH;
+} ;
 
-typedef struct
+ struct RPC_HEADER
 {
     unsigned long header;
     unsigned long XID;
@@ -41,7 +41,7 @@ typedef struct
     unsigned long proc;
     OPAQUE_AUTH cred;
     OPAQUE_AUTH verf;
-} RPC_HEADER;
+} ;
 
 CRPCServer::CRPCServer():m_pProgTable(),m_hMutex()
 {

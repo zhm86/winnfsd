@@ -24,7 +24,7 @@ static std::string wstring_to_dbcs(const std::wstring& wstr) {
     return dbcsStr;
 }
 
-enum
+enum NFSPROC3S
 {
     NFSPROC3_NULL = 0,
     NFSPROC3_GETATTR = 1,
@@ -50,7 +50,7 @@ enum
     NFSPROC3_COMMIT = 21
 };
 
-enum
+enum NFS3S
 {
     NFS3_OK = 0,
     NFS3ERR_PERM = 1,
@@ -83,7 +83,7 @@ enum
     NFS3ERR_JUKEBOX = 10008
 };
 
-enum
+enum NF3S
 {
     NF3REG = 1,
     NF3DIR = 2,
@@ -94,7 +94,7 @@ enum
     NF3FIFO = 7
 };
 
-enum
+enum ACCESS3S
 {
     ACCESS3_READ = 0x0001,
     ACCESS3_LOOKUP = 0x0002,
@@ -104,7 +104,7 @@ enum
     ACCESS3_EXECUTE = 0x0020
 };
 
-enum
+enum FSF3S
 {
     FSF3_LINK = 0x0001,
     FSF3_SYMLINK = 0x0002,
@@ -112,21 +112,21 @@ enum
     FSF3_CANSETTIME = 0x0010
 };
 
-enum
+enum SYNCS
 {
     UNSTABLE = 0,
     DATA_SYNC = 1,
     FILE_SYNC = 2
 };
 
-enum
+enum TIMESETS
 {
     DONT_CHANGE = 0,
     SET_TO_SERVER_TIME = 1,
     SET_TO_CLIENT_TIME = 2
 };
 
-enum
+enum STAS
 {
     UNCHECKED = 0,
     GUARDED = 1,
