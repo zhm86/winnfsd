@@ -9,22 +9,23 @@
 typedef unsigned __int64 uint64;
 typedef unsigned long uint32;
 typedef long int32;
-typedef uint64 fileid3;
-typedef uint64 cookie3;
-typedef uint32 uid3;
-typedef uint32 gid3;
-typedef uint64 size3;
-typedef uint64 offset3;
-typedef uint32 mode3;
-typedef uint32 count3;
-typedef uint32 nfsstat3;
-typedef uint32 ftype3;
-typedef uint32 stable_how;
-typedef uint32 time_how;
-typedef uint32 createmode3;
-typedef uint64 cookieverf3;
-typedef uint64 createverf3;
-typedef uint64 writeverf3;
+typedef uint32 uid3_32;
+typedef uint32 gid3_32;
+typedef uint32 mode3_32;
+typedef uint32 count3_32;
+typedef uint32 nfsstat3_32;
+typedef uint32 ftype3_32;
+typedef uint32 stable_how_32;
+typedef uint32 time_how_32;
+typedef uint32 createmode3_32;
+
+typedef uint64 fileid3_64;
+typedef uint64 cookie3_64;
+typedef uint64 size3_64;
+typedef uint64 offset3_64;
+typedef uint64 cookieverf3_64;
+typedef uint64 createverf3_64;
+typedef uint64 writeverf3_64;
 
 class opaque
 {
@@ -87,16 +88,16 @@ struct sattrguard3
 
 struct fattr3
 {
-	ftype3 type;
-	mode3 mode;
+	ftype3_32 type;
+	mode3_32 mode;
 	uint32 nlink;
-	uid3 uid;
-	gid3 gid;
-	size3 size;
-	size3 used;
+	uid3_32 uid;
+	gid3_32 gid;
+	size3_64 size;
+	size3_64 used;
 	specdata3 rdev;
 	uint64 fsid;
-	fileid3 fileid;
+	fileid3_64 fileid;
 	nfstime3 atime;
 	nfstime3 mtime;
 	nfstime3 ctime;
@@ -110,7 +111,7 @@ struct post_op_attr
 
 struct wcc_attr
 {
-	size3 size;
+	size3_64 size;
 	nfstime3 mtime;
 	nfstime3 ctime;
 };
@@ -136,36 +137,36 @@ struct post_op_fh3
 struct set_mode3
 {
 	bool set_it;
-	mode3 mode;
+	mode3_32 mode;
 };
 
 struct set_uid3
 {
 	bool set_it;
-	uid3 uid;
+	uid3_32 uid;
 };
 
 struct set_gid3
 {
 	bool set_it;
-	gid3 gid;
+	gid3_32 gid;
 };
 
 struct set_size3
 {
 	bool set_it;
-	size3 size;
+	size3_64 size;
 };
 
 struct set_atime
 {
-	time_how set_it;
+	time_how_32 set_it;
 	nfstime3 atime;
 };
 
 struct set_mtime
 {
-	time_how set_it;
+	time_how_32 set_it;
 	nfstime3 mtime;
 };
 
@@ -187,9 +188,9 @@ struct diropargs3
 
 struct createhow3
 {
-	createmode3 mode;
+	createmode3_32 mode;
 	sattr3 obj_attributes;
-	createverf3 verf;
+	createverf3_64 verf;
 };
 
 struct symlinkdata3
@@ -238,29 +239,29 @@ protected:
 	IOutputStream* m_pOutStream;
 	ProcessParam* m_pParam;
 
-	nfsstat3 ProcedureNULL(void);
-	nfsstat3 ProcedureGETATTR(void);
-	nfsstat3 ProcedureSETATTR(void);
-	nfsstat3 ProcedureLOOKUP(void);
-	nfsstat3 ProcedureACCESS(void);
-	nfsstat3 ProcedureREADLINK(void);
-	nfsstat3 ProcedureREAD(void);
-	nfsstat3 ProcedureWRITE(void);
-	nfsstat3 ProcedureCREATE(void);
-	nfsstat3 ProcedureMKDIR(void);
-	nfsstat3 ProcedureSYMLINK(void);
-	nfsstat3 ProcedureMKNOD(void);
-	nfsstat3 ProcedureREMOVE(void);
-	nfsstat3 ProcedureRMDIR(void);
-	nfsstat3 ProcedureRENAME(void);
-	nfsstat3 ProcedureLINK(void);
-	nfsstat3 ProcedureREADDIR(void);
-	nfsstat3 ProcedureREADDIRPLUS(void);
-	nfsstat3 ProcedureFSSTAT(void);
-	nfsstat3 ProcedureFSINFO(void);
-	nfsstat3 ProcedurePATHCONF(void);
-	nfsstat3 ProcedureCOMMIT(void);
-	nfsstat3 ProcedureNOIMP(void);
+	nfsstat3_32 ProcedureNULL(void);
+	nfsstat3_32 ProcedureGETATTR(void);
+	nfsstat3_32 ProcedureSETATTR(void);
+	nfsstat3_32 ProcedureLOOKUP(void);
+	nfsstat3_32 ProcedureACCESS(void);
+	nfsstat3_32 ProcedureREADLINK(void);
+	nfsstat3_32 ProcedureREAD(void);
+	nfsstat3_32 ProcedureWRITE(void);
+	nfsstat3_32 ProcedureCREATE(void);
+	nfsstat3_32 ProcedureMKDIR(void);
+	nfsstat3_32 ProcedureSYMLINK(void);
+	nfsstat3_32 ProcedureMKNOD(void);
+	nfsstat3_32 ProcedureREMOVE(void);
+	nfsstat3_32 ProcedureRMDIR(void);
+	nfsstat3_32 ProcedureRENAME(void);
+	nfsstat3_32 ProcedureLINK(void);
+	nfsstat3_32 ProcedureREADDIR(void);
+	nfsstat3_32 ProcedureREADDIRPLUS(void);
+	nfsstat3_32 ProcedureFSSTAT(void);
+	nfsstat3_32 ProcedureFSINFO(void);
+	nfsstat3_32 ProcedurePATHCONF(void);
+	nfsstat3_32 ProcedureCOMMIT(void);
+	nfsstat3_32 ProcedureNOIMP(void);
 
 	void Read(bool* pBool);
 	void Read(uint32* pUint32);
@@ -291,8 +292,8 @@ private:
 	bool GetPath(std::string& path);
 	bool ReadDirectory(std::string& dirName, std::string& fileName);
 	char* GetFullPath(std::string& dirName, std::string& fileName);
-	nfsstat3 CheckFile(const char* fullPath);
-	nfsstat3 CheckFile(const char* directory, const char* fullPath);
+	nfsstat3_32 CheckFile(const char* fullPath);
+	nfsstat3_32 CheckFile(const char* directory, const char* fullPath);
 	bool GetFileHandle(const char* path, nfs_fh3* pObject);
 	bool GetFileAttributesForNFS(const char* path, wcc_attr* pAttr);
 	bool GetFileAttributesForNFS(const char* path, fattr3* pAttr);

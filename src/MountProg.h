@@ -47,7 +47,7 @@ class CMountProg : public CRPCProg
     int m_nResult;
 
 	bool GetPath(char **returnPath);
-    char *GetPath(int &pathNumber);
+    //char *GetPath(int &pathNumber);
 	bool ReadPathsFromFile(const char* sFileName);
 };
 
