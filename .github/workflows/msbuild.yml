@@ -1,0 +1,30 @@
+name: Build WinNFSd
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest  # 使用 Windows 环境
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Restore NuGet packages
+      run: nuget restore src/WinNFSd.sln
+
+    - name: Build Solution
+      working-directory: src
+      run: msbuild WinNFSd.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: WinNFSd-Build-Output
+        path: src/**/Release/*  # 根据实际输出路径调整
