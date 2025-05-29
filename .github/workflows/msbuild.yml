@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Solution
       working-directory: src
-      run: msbuild WinNFSd.sln /p:Configuration=Release /p:Platform="Any CPU"
+      run: msbuild WinNFSd.sln /p:Configuration=Release|x64
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4.6.2
