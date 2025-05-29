@@ -21,10 +21,10 @@ jobs:
 
     - name: Build Solution
       working-directory: src
-      run: msbuild WinNFSd.sln /p:Configuration=Release|x64
+      run: msbuild WinNFSd.sln /p:Configuration=Release
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4.6.2
       with:
         name: WinNFSd-Build-Output
-        path: src/**/Release/*  # 根据实际输出路径调整
+        path: src/Release/winnfsd.exe  # 根据实际输出路径调整
